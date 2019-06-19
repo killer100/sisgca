@@ -31,7 +31,7 @@ const styles = theme => ({
     }
 });
 
-class DrawerWraperBox extends React.Component {
+class WraperSearchBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -108,13 +108,13 @@ class DrawerWraperBox extends React.Component {
         );
     }
 }
-DrawerWraperBox.defaultProps = {
+WraperSearchBox.defaultProps = {
     anchor: 'top',
     inputPlaceholder: 'Buscar',
     searchOnInit: false
 };
 
-DrawerWraperBox.propTypes = {
+WraperSearchBox.propTypes = {
     classes: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
@@ -126,4 +126,4 @@ DrawerWraperBox.propTypes = {
     searchOnInit: PropTypes.bool
 };
 
-export default withStyles(styles)(DrawerWraperBox);
+export default withStyles(styles)(WraperSearchBox);

@@ -9,7 +9,7 @@ const styles = theme => ({
         margin: 0
     },
     typography: {
-        padding: 25
+        padding: 15
     }
 });
 const FooterProduce = ({ classes }) => (

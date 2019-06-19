@@ -12,7 +12,7 @@ import Menu from '@material-ui/core/Menu';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import withWidth from '@material-ui/core/withWidth';
-import Breakpoints from '../../constants/breakpoints';
+import Breakpoints from '../../../constants/breakpoints';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
@@ -29,11 +29,11 @@ const appBarHeight = 56;
 const styles = theme => ({
     root: {
         flexGrow: 1,
-        marginBottom: theme.spacing.unit * 5,
-        background: '#fff',
-        [theme.breakpoints.between('xs', 'sm')]: {
+        //marginBottom: theme.spacing.unit * 5,
+        background: '#fff'
+        /*[theme.breakpoints.between('xs', 'sm')]: {
             marginBottom: theme.spacing.unit * 10
-        }
+        }*/
     },
     flex: {
         flex: 1,
@@ -76,7 +76,8 @@ const styles = theme => ({
         [theme.breakpoints.down('sm')]: {
             position: 'absolute',
             right: theme.spacing.unit * 0
-        }
+        },
+        zIndex: 1
     },
     navActive: {
         background: theme.palette.primary.dark,
@@ -115,11 +116,11 @@ class HeaderProduce extends React.Component {
         this.setState({ anchorEl: event.currentTarget });
     };
 
-    // logout = () => {
-        // this.setState({ anchorEl: null }, () => {
-            // location.href = '/api/home/logout';
-        // });
-    // };
+    logout = () => {
+        this.setState({ anchorEl: null }, () => {
+            window.location.href = '/api/home/logout';
+        });
+    };
 
     handleClose = () => {
         this.setState({ anchorEl: null });
@@ -177,18 +178,16 @@ class HeaderProduce extends React.Component {
                 <Grid container className={classes.logosContainer}>
                     <Grid item xs={12} sm={12} md={6}>
                         <div className={classes.logoLeft}>
-                            <img src="/Content/img/logo-app.png" alt="" />
+                            <img src="/Content/img/logo-produce.png" alt="" />
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <div className={classes.logoRight}>
-                            <Typography
-                                color="primary"
-                                variant="headline"
-                                className={classes.appNameText}
-                            >
-                                <img src="/Content/img/logo-produce.png" alt="" />
-                            </Typography>
+                            <img
+                                style={{ height: 62 }}
+                                src="/Content/img/logo-procuraduria.png"
+                                alt=""
+                            />
                         </div>
                     </Grid>
                 </Grid>
@@ -203,7 +202,7 @@ class HeaderProduce extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="title" color="inherit" className={classes.brand}>
-                            SISGCA
+                            PROCESOS JUDICIALES
                         </Typography>
                         <div className={classes.flex}>{menuOptions}</div>
                         <div>
@@ -232,7 +231,7 @@ class HeaderProduce extends React.Component {
                                 <MenuItem onClick={this.handleClose}>
                                     {user.NombreParaMostrar}
                                 </MenuItem>
-                                // <MenuItem onClick={this.logout}>Cerrar Sesión</MenuItem>
+                                <MenuItem onClick={this.logout}>Cerrar Sesión</MenuItem>
                             </Menu>
                         </div>
                     </Toolbar>
@@ -246,7 +245,13 @@ class HeaderProduce extends React.Component {
                         onKeyDown={this.toggleDrawer(false)}
                     >
                         <div className={classes.logoLeft}>
-                            <img src="/Content/img/logo-app.png" alt="" />
+                            <Typography
+                                color="primary"
+                                variant="headline"
+                                className={classes.appNameText}
+                            >
+                                <img src="/Content/img/logo-procuraduria.png" alt="" />
+                            </Typography>
                         </div>
                         <Divider />
 

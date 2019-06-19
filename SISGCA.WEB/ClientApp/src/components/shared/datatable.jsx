@@ -10,15 +10,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import grey from '@material-ui/core/colors/grey';
-import Moment from '../_common/moment';
+import Moment from './moment';
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import LinearProgress from '@material-ui/core/LinearProgress';  
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-const heightRow = 57;
+const heightRow = 35;
 
 const stylesDefaultColumn = {
     cellNoRecords: {
@@ -64,11 +64,19 @@ const styles = theme => ({
     }
 });
 
+const cellStyles = {
+    noWrap: { whiteSpace: 'nowrap' },
+    padding: {
+        paddingRight: 4
+    }
+};
+
 const stylesHeaderColumn = theme => ({
     head: {
         fontSize: theme.typography.fontSize + 2,
         fontWeight: 'bold',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        color: grey[800]
     }
 });
 
@@ -94,10 +102,14 @@ const DataTableHeader = ({ columns }) => (
     </TableHead>
 );
 
-const DataTableColumn = ({ colDef, item, loading }) => {
+const DataTableColumn = withStyles(cellStyles)(({ colDef, item, loading, classes, noWrap }) => {
     let value = colDef.propertyName ? eval('item.' + colDef.propertyName) : null;
     return (
-        <TableCell scope="row" style={colDef.tdStyle}>
+        <TableCell
+            scope="row"
+            style={colDef.tdStyle}
+            className={classnames(classes.padding, noWrap ? classes.noWrap : null)}
+        >
             {typeof colDef.render === 'function' ? (
                 colDef.render(item, loading)
             ) : colDef.isDate === true ? (
@@ -107,7 +119,7 @@ const DataTableColumn = ({ colDef, item, loading }) => {
             )}
         </TableCell>
     );
-};
+});
 
 const DataTableDefaultColumn = withStyles(stylesDefaultColumn)(
     ({ classes, colspan, loading, error, emptyMessage }) => (
@@ -237,7 +249,8 @@ class DataTable extends Component {
             onChangePageSize,
             paginationFloatLeft,
             fixedTable,
-            fixedTableWidth
+            fixedTableWidth,
+            noWrap
         } = this.props;
 
         const tableStyle = fixedTable ? { tableLayout: 'fixed', width: fixedTableWidth } : null;
@@ -273,7 +286,13 @@ class DataTable extends Component {
                     className={classnames(index % 2 ? classes.odd : null, classes.tableRow)}
                 >
                     {tableDef.columns.map((col, index) => (
-                        <DataTableColumn key={index} colDef={col} item={item} loading={loading} />
+                        <DataTableColumn
+                            key={index}
+                            colDef={col}
+                            item={item}
+                            loading={loading}
+                            noWrap={noWrap}
+                        />
                     ))}
                 </TableRow>
             ));
@@ -322,7 +341,8 @@ DataTable.defaultProps = {
     itemsPerPageOptions: [5, 10, 15, 20, 25],
     paginationFloatLeft: false,
     fixedTable: false,
-    fixedTableWidth: 1000
+    fixedTableWidth: 1000,
+    noWrap: false
 };
 
 DataTable.propTypes = {
@@ -344,7 +364,8 @@ DataTable.propTypes = {
         ).isRequired
     }),
     fixedTable: PropTypes.bool,
-    fixedTableWidth: PropTypes.number
+    fixedTableWidth: PropTypes.number,
+    noWrap: PropTypes.bool
 };
 
 export default withStyles(styles)(DataTable);

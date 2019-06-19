@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FecthRegistrosSitradoc } from '../../api/common';
+import { FecthRegistrosSitradoc } from '../../api/sitradoc';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import DataTable from './datatable';
-import DrawerWraperBox from './drawer-wraper-box';
+import WraperSearchBox from './wraper-search-box';
 
 class BoxSearchRegistroSitradoc extends Component {
     constructor(props) {
@@ -69,7 +69,7 @@ class BoxSearchRegistroSitradoc extends Component {
     handleSearch = numero => {
         this.setState({ filters: { numero: numero } }, () => {
             const { pagination } = this.state;
-            this.loadData(pagination.page, pagination.pageSize);
+            this.loadData(1, pagination.pageSize);
         });
     };
 
@@ -98,7 +98,7 @@ class BoxSearchRegistroSitradoc extends Component {
         const { tableDef, loading, pagination } = this.state;
         const { open, classes } = this.props;
         return (
-            <DrawerWraperBox
+            <WraperSearchBox
                 inputPlaceholder="Ingrese número"
                 open={open}
                 onClose={this.close}
@@ -116,7 +116,7 @@ class BoxSearchRegistroSitradoc extends Component {
                         this.loadData(1, pageSize);
                     }}
                 />
-            </DrawerWraperBox>
+            </WraperSearchBox>
         );
     }
 }
